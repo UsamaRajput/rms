@@ -1,0 +1,359 @@
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e9f4fb;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logo2 {
+    position: absolute;
+    top: 45%;
+    left: 55%;
+    transform: translate(-50%, -40%);
+    cursor: pointer;
+}
+
+.p {
+    position: absolute;
+    top: 62%;
+    left: 55%;
+    transform: translate(-50%, -40%);
+}
+
+.box {
+    text-align: center;
+}
+
+.button {
+    width: 25%;
+    height: 150px;
+    border: 1px solid;
+    background: #2691d9;
+    border: none;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    border-radius: 10px;
+    outline: none;
+    position: absolute;
+    box-shadow: 0 2px 4px 0 #595959,
+        0 4px 16px 0 rgb(128, 128, 128);
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -40%);
+}
+
+.button:hover {
+    background: #005187;
+}
+
+.button1:hover {
+    background: #037701;
+}
+
+.button1 {
+    width: 25%;
+    height: 150px;
+    border: 1px solid;
+    background: #03a100;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    outline: none;
+    position: absolute;
+    box-shadow: 0 2px 4px 0 rgb(89, 89, 89),
+        0 4px 16px 0 rgb(128, 128, 128);
+    top: 50%;
+    left: 82%;
+    transform: translate(-50%, -40%);
+}
+
+.button2:hover {
+    background-color: #ff6a00;
+}
+
+.button2 {
+    width: 25%;
+    height: 150px;
+    border: 1px solid;
+    background: #ff9d00;
+    border: none;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    border-radius: 10px;
+    outline: none;
+    position: fixed;
+    box-shadow: 0 2px 4px 0 rgb(89, 89, 89),
+        0 4px 16px 0 rgb(128, 128, 128);
+    top: 50%;
+    left: 28%;
+    transform: translate(-50%, -40%);
+}
+
+/*
+.h1{
+text-align: center;
+font-size: 36px;
+color: #002840;
+font-weight: 700;
+top: 50%;
+left: 28%;
+transform: translate(-28%, 250%);
+
+}*/
+.ba {
+    color: #ffffff;
+    font-size: 50px;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 60px;
+}
+
+.menu-bar {
+    background-color: #000000;
+    text-align: center;
+    width: 12%;
+    float: left;
+    position: fixed;
+    height: 100vh;
+    margin: auto;
+    padding: 50.2px 0;
+    display: flex;
+}
+
+.menu-bar ul {
+    display: table-column;
+    list-style: none;
+    color: #fff;
+}
+
+.menu-bar ul li {
+    width: 120px;
+    line-height: 25px;
+    margin: 20px;
+    padding: 6.05px;
+}
+
+.menu-bar ul li .logo {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    float: left;
+    cursor: pointer;
+}
+
+.menu-bar ul li .logo:hover {
+    cursor: pointer;
+
+}
+
+.bi {
+    color: #000000;
+}
+
+.menu-bar ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.menu-bar a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.active,
+.menu-bar ul li:hover {
+    background: #397487;
+    border-radius: 3px;
+    height: 40px;
+    width: 120px;
+    line-height: 28px;
+}
+
+.menu-bar .fa {
+    margin-right: 8px;
+}
+
+.sub-menu-1 {
+    display: none;
+}
+
+.menu-bar ul li:hover .sub-menu-1 {
+    display: block;
+    position: absolute;
+    background-color: #000000;
+    margin-top: -38px;
+    margin-left: 115px;
+}
+
+.menu-bar ul li:hover .sub-menu-1 ul {
+    display: block;
+    margin: 10px;
+}
+
+.menu-bar ul li:hover .sub-menu-1 ul li {
+    width: 120px;
+    padding: 10px;
+    color: #ffffff;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-bar ul li:hover .sub-menu-1 ul li:hover {
+    color: #feaa24;
+}
+
+.sub-menu-2 {
+    display: none;
+}
+
+.menu-bar .sub-menu-1 ul li:hover .sub-menu-2 {
+    display: block;
+    position: absolute;
+    background-color: #000000;
+    margin-top: -30px;
+    margin-left: 100px;
+}
+
+.menu-bar ul li:hover .sub-menu-2 ul {
+    display: block;
+    margin: 10px;
+}
+
+.menu-bar ul li:hover .sub-menu-2 ul li {
+    width: 120px;
+    padding: 10px;
+    color: #ffffff;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-bar ul li:hover .sub-menu-2 ul li:hover {
+    color: #feaa24;
+}
+
+.sub-menu-3 {
+    display: none;
+}
+
+.menu-bar .sub-menu-1 ul li:hover .sub-menu-3 {
+    display: block;
+    position: absolute;
+    background-color: #000000;
+    margin-top: 0px;
+    margin-left: 120px;
+}
+
+.menu-bar ul li:hover .sub-menu-3 ul {
+    display: block;
+    margin: 20px;
+}
+
+.menu-bar ul li:hover .sub-menu-3 ul li {
+    width: 150px;
+    padding: 10px;
+    color: #ffffff;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-bar ul li:hover .sub-menu-3 ul li:hover {
+    color: #feaa24;
+}
+
+.menu-bar ul li:hover .sub-menu-3 ul li a:hover {
+    color: #feaa24;
+}
+
+@media screen and (max-width: 750px) {
+
+    .menu-bar {
+        background-color: rgb(0, 0, 0);
+        text-align: center;
+        width: 32%;
+    }
+
+    .menu-bar ul {
+        display: table-column;
+        list-style: none;
+
+        color: #fff;
+    }
+
+    .menu-bar ul li {
+        width: 120px;
+        line-height: 1px;
+        margin: 20px;
+        padding: 7.9px;
+    }
+
+    .menu-bar ul li .logo {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        float: left;
+    }
+
+
+    .active,
+    .menu-bar ul li:hover {
+        background: #397487;
+        border-radius: 3px;
+        height: 35px;
+        line-height: 20px;
+        width: 120px;
+    }
+
+    .menu-bar ul li:hover .sub-menu-1 {
+        display: block;
+        position: absolute;
+        background-color: #000000;
+        margin-top: -38px;
+        margin-left: 115px;
+    }
+
+    .logo2 {
+        position: absolute;
+        top: 45%;
+        left: 65%;
+        transform: translate(-50%, -40%);
+        cursor: pointer;
+    }
+
+    .p {
+        position: absolute;
+        top: 62%;
+        left: 65%;
+        transform: translate(-50%, -40%);
+    }
+
+    .button1 {
+        width: 50%;
+        top: 80%;
+        left: 65%;
+        transform: translate(-50%, -40%);
+    }
+
+    .button {
+        width: 50%;
+        top: 50%;
+        left: 65%;
+        transform: translate(-50%, -40%);
+    }
+
+    .button2 {
+        width: 50%;
+        top: 20%;
+        left: 65%;
+        transform: translate(-50%, -40%);
+    }
+}
+

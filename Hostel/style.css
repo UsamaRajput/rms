@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+/* custom scroll bar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+::selection{
+  background: rgb(0,123,255,0.3);
+}
+.content{
+  max-width: 1250px;
+  margin: auto;
+  padding: 0 30px;
+}
+.logo{
+  cursor: pointer;
+}
+.pic{
+  height: 600px;
+  width: 700px;
+
+}
+.navbar{
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+  padding: 25px 0;
+  transition: all 0.3s ease;
+}
+.navbar.sticky{
+  background: #222222;
+  padding: 10px 0;
+  box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.1);
+}
+.navbar .content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .menu-list{
+  display: inline-flex;
+}
+.menu-list li{
+  list-style: none;
+}
+.menu-list li a{
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.menu-list li a:hover{
+  color: #feaa24;
+}
+.H3{
+  color: #fff;
+  font-size: 20px;
+}
+.H3:hover{
+  color: #feaa24;
+  font-size: 22px;
+  cursor: pointer;
+}
+.copyright{
+  background-color: #002a61;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+}
+.banner{
+  background: url("banner.jpg") no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.contact{
+  background: url("amirali-mirhashemian-PZKe_hQSaJc-unsplash.jpg") no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.aboutus{
+  background: url("ralph-darabos-l7fSMfZLodY-unsplash.jpg") no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.rules{
+  background: url("Contact.jpg") no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.gallery{
+  background: url("eric-park-QbX8A8eHfzw-unsplash.jpg") no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.title{
+  text-align: center;
+  color: #003f54;
+}
+/*Contact us */
+.table{
+text-align: left;
+width: 100%;
+height: 32px;
+border: 6px;
+text-align: center;
+font-weight: 400;
+background-color: #ffffff;
+color: #000000}
+.fa{
+  color: #ffffff;
+  font-size: 35px;
+  text-align: center;
+  line-height: 60px;
+  border-radius: 60px;
+  }
+  .fa:hover{
+    color: #ffffff;
+    font-size: 38px;
+  }
+  .button0{
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 40px;
+    width: 100px;
+    height: 30px;
+    outline: none;
+    background-color: transparent;
+    color: #2691d9;
+    border-color: #2691d9;
+  }
+  .button0:hover{
+    border-radius: 40px;
+    width: 100px;
+    height: 30px;
+    color: #ffffff;
+    border: none;
+    background-color: #2691d9;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .button01{
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 40px;
+    width: 100px;
+    height: 30px;
+    background: #03a100;
+    border: none;
+    color: #ffffff;
+  
+  }
+  .button01:hover{
+    cursor: pointer;
+    border-radius: 40px;
+    width: 100px;
+    height: 30px;
+    background: #027200;
+    color: #ffffff;
+  }
+
+
+.button{
+  height: 30%;
+  border: none;
+  color: #fff;
+  background: #ff9d00;
+  width: 33%;
+  overflow: hidden;
+}
+.button:hover{
+  background-color: #ff6a00;
+}
+.button1{
+  height: 30%;
+  border: none;
+  color: #ffffff;
+  background: #2691d9;
+  width: 33%;
+  overflow: hidden;
+}
+.button1:hover{
+  background: #005187;}
+.button2{
+  height: 30%;
+  border: none;
+  color: #ffffff;
+  background: #03a100;
+  width: 33%;
+  overflow: hidden;
+}
+.button2:hover{
+  background: #037701;}
+
+.about{
+  padding: 30px 0;
+}
+.about .title{
+  font-size: 38px;
+  font-weight: 700;
+}
+.about p{
+  padding-top: 20px;
+  text-align: justify;
+}
+.icon{
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
+.icon:hover{
+  color: #feaa24;
+}
+.menu-list .cancel-btn{
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  color: #feaa24;
+}
+@media (max-width: 1230px) {
+  .content{
+    padding: 0 60px;
+  }
+  .pic{
+    height: 300px;
+    width: 350px;
+  }
+}
+@media (max-width: 1100px) {
+  .content{
+    padding: 0 40px;
+  }
+}
+@media (max-width: 900px) {
+  .content{
+    padding: 0 30px;
+  }
+}
+@media (max-width: 868px) {
+  body.disabled{
+    overflow: hidden;
+  }
+  .icon{
+    display: block;
+  }
+  .icon.hide{
+    display: none;
+  }
+  .navbar .menu-list{
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    max-width: 400px;
+    left: -100%;
+    top: 0px;
+    display: block;
+    padding: 40px 0;
+    text-align: center;
+    background: #222;
+    transition: all 0.3s ease;
+  }
+  .navbar.show .menu-list{
+    left: 0%;
+  }
+  .navbar .menu-list li{
+    margin-top: 45px;
+  }
+  .navbar .menu-list li a{
+    font-size: 23px;
+    margin-left: -100%;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .navbar.show .menu-list li a{
+    margin-left: 0px;
+  }
+  .button{
+    height: 30%;
+    width: 100%;
+    overflow: hidden;
+  }
+  .button1{
+    height: 30%;
+    width: 100%;
+  
+  }
+  .button2{
+    height: 40%;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+@media (max-width: 380px) {
+  .navbar .logo a{
+    font-size: 27px;
+  }
+}

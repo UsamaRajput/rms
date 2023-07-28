@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="content">
+      <img src="Untitled-2PJ.png" alt="" class="logo" height="80" width="80"><H3 class="H3">Hostel Management</H3>
+      <ul class="menu-list">
+        <div class="icon cancel-btn">
+          <i class="fas fa-times"></i>
+        </div>
+        <li><a href="hostel.html" ><b> HOME</b></a></li>
+        <li><a href="contact us.html">CONTACT US</a></li>
+        <li><a href="about.html">ABOUT</a></li>
+        <li><a href="Rules & regulation.html">RULES & REGULATION</a></li>
+        <li><a href="Gallery.html">GALLERY</a></li>  &nbsp  &nbsp &nbsp
+        <button class="button0" onclick="location.href='D:/FYP-2023/Mess management system.html'"> LOGIN</a></button>  &nbsp  &nbsp  &nbsp
+        <button class="button01" onclick="location.href='D:/FYP-2023/Sign up/Sign up.html'"> SIGNUP</a></button>
+      </ul>
+      <div class="icon menu-btn">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+  <div class="banner"></div>
+  <div class="about">
+    <div class="content">
+      <div class="title">Hostel Management System </div>
+      <p>Hostel management system is designed to manage all hostel activities like hostel admissions, fees, room, mess allotment, hostel stores & generates related reports for smooth transactions. It is also used to manage monthly mess bill calculation, hostel staff payroll, student certificates, etc.</p>
+      <p>Designed & developed keeping in mind all the hostel management concerns of staff, MasterSoft's Hostel Management Software is a one-stop-solution for higher education institutions. Right from students' registration to allocating rooms & mess, managing student count records, and ins-and-outs of students, it streamlines & automates all the day-to-day hostel activities.</p>
+      <p>Checking the rooms' availability, allocating room to new students, managing hostel fees, visitors' records, mess, and all such hostel management related activities manually consume efforts, time, and resources. Moreover, hostel management also requires looking after the security of students which can only be achieved with close supervision of daily students' activities </p>
+      <center>
+      <img src="Hostel-Managemen-info.png" alt="" class="pic" height="700" width="800"></center>
+    </div>
+  
+  </div>
+  
+  <table border="0" cellspacing="0" cellpadding="0" div class="copyright">
+    <tr>
+        <td>
+          <p>Copyright ©️ 2023 | Powered by Android</p>
+        </td>
+        </tr>
+        </table>
+        
+  <script>
+    const body = document.querySelector("body");
+    const navbar = document.querySelector(".navbar");
+    const menuBtn = document.querySelector(".menu-btn");
+    const cancelBtn = document.querySelector(".cancel-btn");
+    menuBtn.onclick = ()=>{
+      navbar.classList.add("show");
+      menuBtn.classList.add("hide");
+      body.classList.add("disabled");
+    }
+    cancelBtn.onclick = ()=>{
+      body.classList.remove("disabled");
+      navbar.classList.remove("show");
+      menuBtn.classList.remove("hide");
+    }
+    window.onscroll = ()=>{
+      this.scrollY > 20 ? navbar.classList.add("sticky") : navbar.classList.remove("sticky");
+    }
+  </script>
+
+</body>
+</html>
