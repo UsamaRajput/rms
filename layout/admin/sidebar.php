@@ -1,45 +1,20 @@
 <div class="menu-bar">
         <ul>
             <img src="<?= assets('logo.jpg',2)?>" alt="" class="logo" height="120" width="120">
-            <a href="login.html">
-                <li class="active"><i class="fa fa-home" aria-hidden="true"></i> Home
+          
+            <a href="index.php">
+                <li><i class="fa fa-user" aria-hidden="true"></i>Home</li>
             </a>
-            <div class="sub-menu-1">
-                <ul>
-                    <li>
-                        <div class="sub-menu-2">
-                            <ul>
-                                <li>Bills</li>
-                                <li>Day Eat</li>
-
-                            </ul>
-                        </div>
-                        Nav
-                    </li>
-                    <li>
-                        <div class="sub-menu-3">
-                            <ul>
-                                <li>Attendence</li>
-                                <li><a href="https://www.youtube.com/watch?v=vqu4z34wENw&ab_channel=YRF" target="_blank"> Mess Number</a></li>
-                            </ul>
-                        </div>
-                        Manager
-                    </li>
-                    <li>List Mess</li>
-                    <li>Dishes</li>
-                </ul>
-            </div>
-            </li>
-            <a href="Manager.html">
-                <li><i class="fa fa-user" aria-hidden="true"></i>Manager</li>
+            <a href="departments.php">
+                <li><i class="fa fa-user" aria-hidden="true"></i>Departments</li>
             </a>
-            <a href="admin.html">
-                <li><i class="fa fa-user" aria-hidden="true"></i>Admin</li>
+            <a href="rooms.php">
+                <li><i class="fa fa-user" aria-hidden="true"></i>Rooms</li>
             </a>
-            <a href="hostel.html">
-                <li><i class="fa fa-bed" aria-hidden="true"></i>Hostel</li>
+            <a href="users.php">
+                <li><i class="fa fa-bed" aria-hidden="true"></i>Users</li>
             </a>
-            <a href="Mess.html">
+            <a href="mess.php">
                 <li><i class="fa fa-fire" aria-hidden="true"></i>Mess</li>
             </a>
             <a href="Dishes.html">

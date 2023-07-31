@@ -24,21 +24,30 @@ function site_url($url = null)
     }
     return SITE_URL;
 }
-function assets($url = null, $cond )
+function assets($url = null, $cond)
 {
-    if($cond == 2)
+    if ($cond == 2)
         $folder = 'images/';
-    elseif($cond == 1)
+    elseif ($cond == 1)
         $folder = 'css/';
-    elseif($cond == 3)
+    elseif ($cond == 3)
         $folder = 'js/';
-    else 
+    else
         $folder = '';
 
     if ($url != null) {
-        return SITE_URL . 'assets/' . $folder . $url.'?refresh='.time();
+        return SITE_URL . 'assets/' . $folder . $url . '?refresh=' . time();
     }
     return SITE_URL;
+}
+function uploads($name = null)
+{
+  
+    if ($name != null) {
+        return SITE_URL . 'uploads/' . $name ;
+    }
+    return "";
+    // return SITE_URL;
 }
 function check_login($db, $check = true)
 {
@@ -59,7 +68,7 @@ function check_login($db, $check = true)
 function set_user_session($params = array())
 {
     $_SESSION['user_id'] = $params['id'];
-    $_SESSION['name'] = $params['first_name'].' '.$params['last_name'];
+    $_SESSION['name'] = $params['first_name'] . ' ' . $params['last_name'];
     $_SESSION['email'] = $params['email'];
     $_SESSION['is_admin'] = $params['is_admin'];
 }
@@ -78,6 +87,40 @@ function logout($db)
     update($db, 'users', ['is_logged_in' => 0], " id = {$id} ");
     unset_user_session();
     js_redirect('login.php');
+}
+
+function ext_check($file, $exts = array())
+{
+    $img_arr = explode('.', $file['name']);
+    $img_ext = end($img_arr);
+    return in_array($img_ext, $exts);
+}
+function muliple_uploads($dest, $files)
+{
+    $total_files = count($files['name']);
+    $images_name = array();
+    for ($i = 0; $i < $total_files; $i++) {
+        $img_name = $dest . '/' . time() . '_' . str_replace(' ', '_', $files['name'][$i]);
+        // You may want to add more checks here to validate the file type, size, etc.
+        if (move_uploaded_file($files['tmp_name'][$i], 'uploads/' . $img_name)) {
+            $images_name[] = $img_name;
+        }
+    }
+    return $images_name;
+}
+function file_upload($dest, $file = array(), $del = '')
+{
+    if ($del != '') {
+        unlink('uploads/' . $del);
+    }
+    $img_name = $dest . '/' . time() . '_' . str_replace(' ', '_', $file['name']);
+    $tmp_path = $file['tmp_name'];
+    $res = move_uploaded_file($tmp_path, 'uploads/' . $img_name);
+    if ($res) {
+        return $img_name;
+    } else {
+        return false;
+    }
 }
 /**
  * JAVASCRIPT FUNCTIONS

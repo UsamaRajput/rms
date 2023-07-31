@@ -5,50 +5,28 @@
 
 $name = '';
 $email = '';
-// if (isset($_POST['sign_up'])) {
-//     $name = $_POST['name'];
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
-//     if (!(empty($name) || empty($email) || empty($password))) {
-//         $hash_password = password_hash($password, PASSWORD_DEFAULT);
-//         $res = mysqli_query($db,"SELECT * FROM users WHERE email = '$email'");
-//         if (mysqli_num_rows($res) > 0) {
-//             js_alert('Email Already Exist');
-//         } else {
-//             $data = [
-//                 'name' => $name,
-//                 'email' => $email,
-//                 'password' => $hash_password,
-//             ];
-//             $insert_user = insert($db, 'users', $data);
-//             if ($insert_user) {
-//                 $last_id = mysqli_insert_id($db);
-//                 set_user_session($last_id, $name, $email);
-//                 js_redirect('client/index.php');
-//             }
-//         }
-//     } else {
-//         js_alert('All Fields are Required');
-//     }
-// }
 
 if (isset($_POST['sign_in'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     if (!(empty($email) || empty($password))) {
-        $qry = mysqli_query($db,"SELECT * FROM users WHERE email = '$email' AND `is_active` = 1 AND `is_verified` = 1");
+        $qry = mysqli_query($db, "SELECT * FROM users WHERE email = '$email' AND `is_active` = 1");
         if (mysqli_num_rows($qry) > 0) {
             $row = mysqli_fetch_assoc($qry);
-            if (password_verify($password, $row['password'])) {
-                set_user_session($row);
-                js_redirect('client/index.php');
+            if ($row['is_verified'] != 1) {
+                js_alert('You are not verified from admin');
             } else {
-                js_alert('Password Not Match In Our Credentials');
+                if (password_verify($password, $row['password'])) {
+                    set_user_session($row);
+                    js_redirect('index.php');
+                } else {
+                    js_alert('Password Not Match In Our Credentials');
+                }
             }
         } else {
             js_alert('Email is not available Please Sign up');
         }
-    }else{
+    } else {
         js_alert('All fields are required');
     }
 }
@@ -65,9 +43,9 @@ if (isset($_POST['sign_in'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <title>Mess Management System</title>
-    <link rel="Stylesheet" href="<?= assets('login.css',1)?>">
+    <link rel="Stylesheet" href="<?= assets('login.css', 1) ?>">
     <style>
-        form{
+        form {
             background-color: black;
         }
     </style>
