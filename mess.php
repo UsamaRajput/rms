@@ -1,7 +1,7 @@
 <?php require_once 'layout/admin/header.php'; ?>
 <?php include_once 'layout/admin/sidebar.php'; ?>
 <?php
-$dept = all_data($db, 'mess');
+$mess = all_data($db, 'mess');
 if (isset($_POST['name'])) {
     $exists = all_data($db, 'mess', " name = '" . $_POST['name'] . "'", true);
     if ($exists > 0) {
@@ -31,15 +31,23 @@ if (isset($_POST['delete'])) {
                     <th>Day</th>
                     <th>Dish 1</th>
                     <th>Dish 2</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ( range(1,7) as $single) {
+                <?php foreach ($mess as $single) {
                 ?>
                     <tr>
-                        <td><?=  date('l', strtotime("Sunday +{$single} days")) ?></td>
-                        <td><?= $single ?></td>
-                        <td></td>
+                        <td><?= date('l', strtotime("Sunday +{$single['day']} days")) ?></td>
+                        <td>
+                            <input type="text" value="<?= $single['dish1'] ?>" id="dish1<?= $single['day'] ?>">
+                            <input type="text" value="<?= $single['dish1_units'] ?>" id="dish1-units<?= $single['day'] ?>">
+                        </td>
+                        <td>
+                            <input type="text" value="<?= $single['dish2'] ?>" id="dish2<?= $single['day'] ?>">
+                            <input type="text" value="<?= $single['dish2_units'] ?>" id="dish2-units<?= $single['day'] ?>">
+                        </td>
+                        <td><input type="button" class="btn btn-sm btn-primary update-dish" value="update" data-day="<?= $single['day'] ?>" /></td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -47,3 +55,41 @@ if (isset($_POST['delete'])) {
     </div>
 </div>
 <?php require_once 'layout/admin/footer.php'; ?>
+
+<script>
+    $('.update-dish').click(function(e) {
+        e.preventDefault();
+        let day = $(this).data('day');
+        let ele = $(this).closest('tr');
+        let dish1 = ele.find(`#dish1${day}`).val();
+        let dish2 = ele.find(`#dish2${day}`).val();
+        let dish1_units = ele.find(`#dish1-units${day}`).val();
+        let dish2_units = ele.find(`#dish2-units${day}`).val();
+        // console.log( {
+        //         dish_update: 1,
+        //         day: day,
+        //         dish1: dish1,
+        //         dish2: dish2,
+        //         dish1_units: dish1_units,
+        //         dish2_units: dish2_units
+        //     });
+        alert('hi')
+        $.ajax({
+            url: 'ajax/room.php',
+            type: 'post',
+            data: {
+                dish_update: 1,
+                day: day,
+                dish1: dish1,
+                dish2: dish2,
+                dish1_units: dish1_units,
+                dish2_units: dish2_units
+            },
+            success: function(res) {
+                // console.log(res);
+                alert(res)
+            }
+        })
+
+    })
+</script>
