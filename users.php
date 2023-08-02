@@ -21,6 +21,7 @@ if (isset($_POST['field'])) {
     ) {
         $data['room_id'] = 0;
     }
+    room_current($db, $_POST);
     update($db, 'users', $data, ' id = ' . $_POST['id']);
     js_redirect('users.php');
 }
@@ -218,6 +219,7 @@ if (isset($_POST['delete'])) {
                                 <input type="hidden" name="id" value="' . $single['user_id'] . '">
                                 <input type="hidden" name="field" value="is_verified">
                                 <input type="hidden" name="val" value="1">
+                                <input type="hidden" name="pre_id" value="0">
                                 <input type="submit" value="Verify" class="btn btn-sm btn-success">
                             </form>';
                             } else {
@@ -225,6 +227,7 @@ if (isset($_POST['delete'])) {
                                 <input type="hidden" name="id" value="' . $single['user_id'] . '">
                                 <input type="hidden" name="field" value="is_verified">
                                 <input type="hidden" name="val" value="0">
+                                <input type="hidden" class="pre_id'.$single['user_id'].'" name="pre_id" value="' . $single['room_id'] . '">
                                 <input type="button" value="Un Verify" class="btn btn-sm btn-danger action-btn">
                             </form>';
                             }
@@ -235,6 +238,7 @@ if (isset($_POST['delete'])) {
                                 <input type="hidden" name="id" value="' . $single['user_id'] . '">
                                 <input type="hidden" name="field" value="is_active">
                                 <input type="hidden" name="val" value="1">
+                                <input type="hidden" name="pre_id" value="0">
                                 <input type="submit" value="Active" class="btn btn-sm btn-success">
                             </form>';
                             } else {
@@ -242,6 +246,7 @@ if (isset($_POST['delete'])) {
                                 <input type="hidden" name="id" value="' . $single['user_id'] . '">
                                 <input type="hidden" name="field" value="is_active">
                                 <input type="hidden" name="val" value="0">
+                                <input type="hidden" class="pre_id'.$single['user_id'].'" name="pre_id" value="' . $single['room_id'] . '">
                                 <input type="button" value="De Active" class="btn btn-sm btn-danger action-btn">
                             </form>';
                             }
@@ -290,6 +295,7 @@ if (isset($_POST['delete'])) {
                         if (room_id == 0) {
                             alert('Room removed')
                         } else {
+                            $(`.pre_id${user_id}`).val(room_id);
                             alert('Room assigned');
                         }
                     } else {

@@ -42,9 +42,9 @@ function assets($url = null, $cond)
 }
 function uploads($name = null)
 {
-  
+
     if ($name != null) {
-        return SITE_URL . 'uploads/' . $name ;
+        return SITE_URL . 'uploads/' . $name;
     }
     return "";
     // return SITE_URL;
@@ -121,6 +121,18 @@ function file_upload($dest, $file = array(), $del = '')
     } else {
         return false;
     }
+}
+function room_current($db, $params)
+{
+    $pre_room = single_data($db, 'rooms', ' id = ' . ($params['pre_id'] ?? 0));
+    if ($pre_room) {
+        update($db, 'rooms', ['current' =>  $pre_room['current'] - 1], ' id = ' . $params['pre_id'] . ' AND current > 0');
+    }
+    $current_room = single_data($db, 'rooms', ' id = ' . ($params['room_id'] ?? 0));
+    if ($current_room) {
+        update($db, 'rooms', ['current' => $current_room['current'] + 1], ' id = ' . $params['room_id'] . ' AND capacity > current');
+    }
+    return 1;
 }
 /**
  * JAVASCRIPT FUNCTIONS

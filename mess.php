@@ -87,7 +87,11 @@ if (isset($_POST['delete'])) {
             },
             success: function(res) {
                 // console.log(res);
-                alert(res)
+                if(res == 1){
+                    alert('dish update');
+                }else{
+                    alert('server error')
+                }
             }
         })
 

@@ -14,11 +14,11 @@
             <a href="users.php">
                 <li><i class="fa fa-bed" aria-hidden="true"></i>Users</li>
             </a>
+            <a href="news.php">
+                <li><i class="fa fa-cutlery" aria-hidden="true"></i>News</li>
+            </a>
             <a href="mess.php">
                 <li><i class="fa fa-fire" aria-hidden="true"></i>Mess</li>
-            </a>
-            <a href="Dishes.html">
-                <li><i class="fa fa-cutlery" aria-hidden="true"></i>Dishes</li>
             </a>
             <a href="D:\FYP-2023\Mess management system.html">
                 <li><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</li>
