@@ -1,27 +1,7 @@
 <?php require_once 'layout/admin/header.php'; ?>
 <?php include_once 'layout/admin/sidebar.php'; ?>
 <?php
-$mess = all_data($db, 'mess');
-if (isset($_POST['name'])) {
-    $exists = all_data($db, 'mess', " name = '" . $_POST['name'] . "'", true);
-    if ($exists > 0) {
-        js_alert('department already exists');
-    } else {
-        $res = insert($db, 'mess', $_POST);
-        if ($res) {
-            js_alert('department added successfully');
-            js_redirect('mess.php');
-        } else {
-            js_alert('Server error');
-        }
-    }
-}
-
-if (isset($_POST['delete'])) {
-    del_data($db, 'mess', $_POST['id']);
-    js_redirect('mess.php');
-}
-?>
+$mess = all_data($db, 'mess');?>
 
 <div style="margin-left: 300px;">
     <div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 31, 2023 at 08:51 PM
+-- Generation Time: Aug 08, 2023 at 11:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,7 +38,8 @@ CREATE TABLE `departments` (
 
 INSERT INTO `departments` (`id`, `name`) VALUES
 (1, 'BS-IT'),
-(2, 'BS-CS');
+(2, 'BS-CS'),
+(5, 'jnj');
 
 -- --------------------------------------------------------
 
@@ -54,6 +55,43 @@ CREATE TABLE `mess` (
   `dish2_units` int(11) NOT NULL,
   `day` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mess`
+--
+
+INSERT INTO `mess` (`id`, `dish1`, `dish2`, `dish1_units`, `dish2_units`, `day`) VALUES
+(1, 'alo indaa', 'chana rice', 12, 16, 1),
+(2, 'dal frijhj', 'sabziyt', 167, 108, 2),
+(3, 'das', 'cxz', 12, 22, 3),
+(4, 'dsad', 'zxc', 12, 14, 4),
+(5, 'asd', 'ads', 10, 12, 5),
+(6, 'kjk', 'kkj', 8, 90, 6),
+(7, 'jbm', 'jjhj', 99, 9, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `news`
+--
+
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `issue_date` date NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `is_active` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`id`, `image`, `title`, `description`, `issue_date`, `type`, `is_active`) VALUES
+(4, 'images/news/1691177060_B612_20210527_185133_695.jpg', 'm1', 'holo1', '2023-08-03', 0, 1),
+(8, 'images/news/1691311235_17c23deffcaa4cd7909debe54bb5703e.jpg', 'S', 'AS', '2023-08-01', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -74,7 +112,8 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `number`, `capacity`, `current`, `is_active`) VALUES
-(10, 1, 2, 2, 1);
+(10, 1, 2, 2, 1),
+(11, 2, 4, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -96,7 +135,10 @@ INSERT INTO `room_images` (`id`, `room_id`, `image`) VALUES
 (33, 10, 'images/rooms/1690714589_20210316_174318.jpg'),
 (34, 10, 'images/rooms/1690714589_20210316_174343.jpg'),
 (35, 10, 'images/rooms/1690714589_B612_20210527_185133_695.jpg'),
-(36, 10, 'images/rooms/1690714589_B612_20210527_185138_465.jpg');
+(37, 11, 'images/rooms/1691087195_B612_20210527_185140_660.jpg'),
+(38, 11, 'images/rooms/1691087195_B612_20210527_185317_164.jpg'),
+(39, 11, 'images/rooms/1691087195_B612_20210527_185320_222.jpg'),
+(40, 11, 'images/rooms/1691087195_B612_20210527_185324_408.jpg');
 
 -- --------------------------------------------------------
 
@@ -109,6 +151,20 @@ CREATE TABLE `room_user` (
   `room_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `is_active` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -128,6 +184,7 @@ CREATE TABLE `users` (
   `cnic` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `room_id` int(11) NOT NULL,
+  `requested_room` int(11) NOT NULL DEFAULT 0,
   `dept_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL DEFAULT 'default_img.png',
   `phone` varchar(50) NOT NULL,
@@ -144,9 +201,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `blood_group`, `dob`, `gender`, `email`, `cnic`, `password`, `room_id`, `dept_id`, `image`, `phone`, `address`, `city`, `is_active`, `is_admin`, `is_verified`, `registered_date`, `room_assigned_date`) VALUES
-(2, 'usama', 'rasheed', 'B+', '2023-07-28', 'male', 'usama1@gmail.com', '2323', '', 10, 1, 'images/users/1690726121_17c23deffcaa4cd7909debe54bb5703e.jpg', 'password', 'password', 'password', 1, 1, 1, '2023-07-29', NULL),
-(3, 'usama12', 'rasheed12', 'AB+', '2023-07-30', 'male', 'usama22@gmail.com', '499042', '', 10, 1, 'images/users/1690726090_FB_IMG_1613192819562.jpg', 'password12', 'password12', 'password12', 1, 1, 1, '2023-07-29', NULL);
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `blood_group`, `dob`, `gender`, `email`, `cnic`, `password`, `room_id`, `requested_room`, `dept_id`, `image`, `phone`, `address`, `city`, `is_active`, `is_admin`, `is_verified`, `registered_date`, `room_assigned_date`) VALUES
+(2, 'usama', 'rasheed', 'B+', '2023-07-28', 'male', 'usama1@gmail.com', '2323', '', 11, 11, 1, 'images/users/1690726121_17c23deffcaa4cd7909debe54bb5703e.jpg', 'password', 'password', 'password', 1, 1, 1, '2023-07-29', NULL),
+(3, 'usama12', 'rasheed12', 'AB+', '2023-07-30', 'male', 'usama22@gmail.com', '499042', '', 11, 0, 1, 'images/users/1690726090_FB_IMG_1613192819562.jpg', 'password12', 'password12', 'password12', 1, 1, 1, '2023-07-29', NULL),
+(6, 'zc', 'zcx', 'a', '2023-08-01', 'male', 'sad@da.ca', '32423432432', 'ads', 11, 0, 1, 'default_img.png', 'a', 'adsasd', '', 1, 0, 1, '2023-08-05', '2023-08-01'),
+(7, 'sdsd', 'zcxsd', 'a', '2023-08-01', 'male', 'sasd@da.ca', '32423432432', 'ads', 10, 0, 2, 'default_img.png', 'a', 'adsasd', '', 1, 0, 1, '2023-08-05', '2023-08-01'),
+(8, 'usama12s', 'rasheed12s', 'AB+', '2023-07-30', 'male', 'usama22s@gmail.com', '499042', '', 10, 0, 5, 'images/users/1690726090_FB_IMG_1613192819562.jpg', 'password12', 'password12', 'password12', 1, 1, 1, '2023-07-29', NULL);
 
 --
 -- Indexes for dumped tables
@@ -162,6 +222,12 @@ ALTER TABLE `departments`
 -- Indexes for table `mess`
 --
 ALTER TABLE `mess`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -183,6 +249,12 @@ ALTER TABLE `room_user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -196,25 +268,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `mess`
 --
 ALTER TABLE `mess`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `room_images`
 --
 ALTER TABLE `room_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `room_user`
@@ -223,10 +301,16 @@ ALTER TABLE `room_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

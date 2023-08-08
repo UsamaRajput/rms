@@ -2,7 +2,7 @@
         <ul>
             <img src="<?= assets('logo.jpg',2)?>" alt="" class="logo" height="120" width="120">
           
-            <a href="index.php">
+            <a href="dashboard.php">
                 <li><i class="fa fa-user" aria-hidden="true"></i>Home</li>
             </a>
             <a href="departments.php">

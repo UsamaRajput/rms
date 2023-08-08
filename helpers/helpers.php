@@ -111,7 +111,9 @@ function muliple_uploads($dest, $files)
 function file_upload($dest, $file = array(), $del = '')
 {
     if ($del != '') {
-        unlink('uploads/' . $del);
+        if (file_exists('uploads/'. $del)) {
+            unlink('uploads/' . $del);
+        }
     }
     $img_name = $dest . '/' . time() . '_' . str_replace(' ', '_', $file['name']);
     $tmp_path = $file['tmp_name'];
@@ -122,6 +124,14 @@ function file_upload($dest, $file = array(), $del = '')
         return false;
     }
 }
+
+function delete_file($des)
+{
+    if (file_exists( $des)) {
+        return  unlink( $des);
+    }
+}
+
 function room_current($db, $params)
 {
     $pre_room = single_data($db, 'rooms', ' id = ' . ($params['pre_id'] ?? 0));

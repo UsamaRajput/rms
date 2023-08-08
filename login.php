@@ -18,7 +18,7 @@ if (isset($_POST['sign_in'])) {
             } else {
                 if (password_verify($password, $row['password'])) {
                     set_user_session($row);
-                    js_redirect('index.php');
+                    js_redirect('dashboard.php');
                 } else {
                     js_alert('Password Not Match In Our Credentials');
                 }

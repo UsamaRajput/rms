@@ -4,8 +4,12 @@
 // $users = all_data($db, 'users');
 $rooms = all_data($db, 'rooms', ' is_active = 1');
 $departments = all_data($db, 'departments');
-$qry = "SELECT *,users.id as user_id, users.is_active as user_active FROM users LEFT JOIN rooms ON users.room_id = rooms.id LEFT JOIN departments ON users.dept_id = departments.id ";
-
+// $qry = "SELECT *,users.id as user_id, users.is_active as user_active FROM users LEFT JOIN rooms ON users.room_id = rooms.id LEFT JOIN departments ON users.dept_id = departments.id ";
+$qry = "SELECT *,users.id as user_id, users.is_active as user_active ,
+( SELECT count(dept_id) FROM users as depus WHERE users.dept_id = depus.dept_id ) as dept_count
+FROM users LEFT JOIN rooms ON users.room_id = rooms.id LEFT JOIN departments ON users.dept_id = departments.id ";
+// echo $qry;
+// die;
 if ((isset($_GET['token']) && $_GET['token'] != '') && isset($_GET['sort']) && $_GET['sort'] != '') {
     $qry .= " WHERE `users`.`" . $_GET['token'] . '` = ' . $_GET['sort'];
 }
@@ -183,6 +187,7 @@ if (isset($_POST['delete'])) {
             </thead>
             <tbody>
                 <?php foreach ($users as $index => $single) {
+                    // pr($single,1);
                 ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
@@ -202,7 +207,7 @@ if (isset($_POST['delete'])) {
                                 <?php
                                 foreach ($rooms as $key => $room) {
                                 ?>
-                                    <option <?= ($single['room_id'] == $room['id'] ? 'selected' : '') ?> value="<?= $room['id'] ?>"><?= ROOM_PREFIX . ' ' . $room['number'] ?></option>
+                                    <option <?= $room['current'] >= $room['capacity'] ? 'disabled' : '' ?> <?= ($single['room_id'] == $room['id'] ? 'selected' : '') ?> value="<?= $room['id'] ?>"><?= ROOM_PREFIX . ' ' . $room['number'] ?></option>
                                 <?php
                                 }
                                 ?>
@@ -227,7 +232,7 @@ if (isset($_POST['delete'])) {
                                 <input type="hidden" name="id" value="' . $single['user_id'] . '">
                                 <input type="hidden" name="field" value="is_verified">
                                 <input type="hidden" name="val" value="0">
-                                <input type="hidden" class="pre_id'.$single['user_id'].'" name="pre_id" value="' . $single['room_id'] . '">
+                                <input type="hidden" class="pre_id' . $single['user_id'] . '" name="pre_id" value="' . $single['room_id'] . '">
                                 <input type="button" value="Un Verify" class="btn btn-sm btn-danger action-btn">
                             </form>';
                             }
@@ -246,7 +251,7 @@ if (isset($_POST['delete'])) {
                                 <input type="hidden" name="id" value="' . $single['user_id'] . '">
                                 <input type="hidden" name="field" value="is_active">
                                 <input type="hidden" name="val" value="0">
-                                <input type="hidden" class="pre_id'.$single['user_id'].'" name="pre_id" value="' . $single['room_id'] . '">
+                                <input type="hidden" class="pre_id' . $single['user_id'] . '" name="pre_id" value="' . $single['room_id'] . '">
                                 <input type="button" value="De Active" class="btn btn-sm btn-danger action-btn">
                             </form>';
                             }
@@ -291,11 +296,26 @@ if (isset($_POST['delete'])) {
                     pre_id: pre_id
                 },
                 success: function(res) {
-                    if (res == 1) {
+                    let data = JSON.parse(res);
+                    if (data.success == 1) {
                         if (room_id == 0) {
                             alert('Room removed')
                         } else {
-                            $(`.pre_id${user_id}`).val(room_id);
+                            if (room_id != 0) {
+                                let capacity = data.room.capacity;
+                                let current = data.room.current;
+                                if (current >= capacity) {
+                                    $(`option[value=${room_id}]`).attr('disabled', true);
+                                }
+                            }
+                            if (pre_id != 0) {
+                                let pre_capacity = data.pre_room.capacity;
+                                let pre_current = data.pre_room.current;
+                                if (pre_capacity >= pre_current) {
+                                    $(`option[value=${pre_id}]`).attr('disabled', false)
+                                }
+                                $(`.pre_id${user_id}`).val(room_id);
+                            }
                             alert('Room assigned');
                         }
                     } else {

@@ -66,7 +66,7 @@ if (isset($_POST['field'])) {
 if (isset($_POST['delete'])) {
     $room_imgs = all_data($db, 'room_images', ' room_id = ' . $_POST['id']);
     foreach ($room_imgs as $key => $value) {
-        unlink(__DIR__ . '/uploads/' . $value['image']);
+        delete_file(__DIR__ . '/uploads/' . $value['image']);
     }
     del_custom($db, 'room_images', ' room_id = ' . $_POST['id']);
     del_data($db, 'rooms', $_POST['id']);

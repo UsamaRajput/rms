@@ -3,12 +3,14 @@
 <?php
 $news = all_data($db, 'news');
 if (isset($_POST['add_news'])) {
-    $exists = all_data($db, 'news', " title = '" . $_POST['title'] . "'", true);
+    $exists = all_data($db, 'news', " type =  1 ", true);
     if ($exists > 0) {
-        js_alert('News title already exists');
+        js_alert('Notis can only be one please remove first notis');
     } else {
         unset($_POST['add_news']);
-        file_upload('images/news', $_FILES['image']);
+        if (isset($_FILES['image']) && !empty($_FILES['image'])) {
+            $_POST['image'] = file_upload('images/news', $_FILES['image']);
+        }
         $res = insert($db, 'news', $_POST);
         if ($res) {
             js_alert('News added successfully');
@@ -19,25 +21,26 @@ if (isset($_POST['add_news'])) {
     }
 }
 
-if (isset($_POST['update_news'])) {
+if (isset($_POST['field'])) {
+    $data = [$_POST['field'] => $_POST['val']];
+    update($db, 'news', $data, ' id = ' . $_POST['id']);
+    js_redirect('news.php');
+}
 
-    if ($_POST['pre_title'] != $_POST['title']) {
-        $exists = all_data($db, 'news', " title = '" . $_POST['title'] . "'", true);
-    } else {
-        $exists = 0;
-    }
+if (isset($_POST['update_news'])) {
+    $exists = all_data($db, 'news', " type = 1 AND id <> " . $_POST['news_id'], true);
 
     if ($exists > 0) {
-        js_alert('News title already exists');
+        js_alert('Notis can only be one please remove first notis');
     } else {
         $id = $_POST['news_id'];
         $del_img = $_POST['del_img'];
-        unset($_POST['update_news'], $_POST['pre_title'], $_POST['news_id'],$_POST['del_img']);
+        unset($_POST['update_news'], $_POST['news_id'], $_POST['del_img']);
+        if (isset($_FILES['image']) && !empty($_FILES['image'])) {
+            $_POST['image'] = file_upload('images/news', $_FILES['image'], $del_img);
+        }
         $res = update($db, 'news', $_POST, ' id = ' . $id);
         if ($res) {
-            if (isset($_FILES['image']) && !empty($_FILES['image'])) {
-                file_upload('images/news', $_FILES['image'],$del_img);
-            }
             js_alert('News updated successfully');
             js_redirect('news.php');
         } else {
@@ -47,13 +50,14 @@ if (isset($_POST['update_news'])) {
 }
 
 if (isset($_POST['delete'])) {
+    delete_file('uploads/' . $_POST['delete_img']);
     del_data($db, 'news', $_POST['id']);
-    js_redirect('news');
+    js_redirect('news.php');
 }
 
 ?>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,9 +66,8 @@ if (isset($_POST['delete'])) {
             </div>
             <form method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-
                     <input type="hidden" name='news_id' class="form-control" id="news-id">
-                    <input type="hidden" name='pre_title' class="form-control" id="news-pre">
+                    <!-- <input type="hidden" name='pre_title' class="form-control" id="news-pre"> -->
                     <input type="hidden" name='del_img' class="form-control" id="news-delimg">
                     <div class="mb-3">
                         <label for="news-num" class="col-form-label">News title:</label>
@@ -79,14 +82,18 @@ if (isset($_POST['delete'])) {
                         <input type="date" name='issue_date' class="form-control" id="news-date">
                     </div>
                     <div class="mb-3">
-                        <select name="type" class="form-control">
+                        <label for="news-type" class="col-form-label">News type:</label>
+                        <select name="type" id="news-type" class="form-control">
                             <option value="0">News</option>
                             <option value="1">Clip</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="news-img" class="col-form-label">News Image:</label>
-                        <input type="file" name="image" class="form-control" id="news-img">
+                        <input type="file" name="image" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <img src="" id="news-img" alt="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -101,11 +108,11 @@ if (isset($_POST['delete'])) {
     <div>
         <form method="post" enctype="multipart/form-data">
             <input type="text" value="<?= $_POST['title'] ?? '' ?>" name="title" placeholder="News title" />
-            <textarea value="<?= $_POST['description'] ?? '' ?>" name="description" placeholder="Capacity"></textarea>
-            <input type="date" name="issue_date">
+            <textarea value="<?= $_POST['description'] ?? '' ?>" name="description" placeholder="News Description"><?= $_POST['description'] ?? '' ?></textarea>
+            <input type="date" value="<?= $_POST['issue_date'] ?? '' ?>" name="issue_date">
             <select name="type">
-                <option value="0">News</option>
-                <option value="1">Clip</option>
+                <option <?= $_POST['type'] ?? '' == 0 ? 'selected' : '' ?> value="0">News</option>
+                <option <?= $_POST['type'] ?? '' == 1 ? 'selected' : '' ?> value="1">Clip</option>
             </select>
             <input type="file" name="image">
             <input type="submit" name="add_news" value="Add News">
@@ -120,6 +127,7 @@ if (isset($_POST['delete'])) {
                     <th>title</th>
                     <th>Description</th>
                     <th>Date</th>
+                    <th>Type</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -133,11 +141,36 @@ if (isset($_POST['delete'])) {
                         </td>
                         <td class="news_title"><?= $single['title']; ?></td>
                         <td class="news_desc"><?= $single['description']; ?></td>
-                        <td class="news_date"><?= date('d-m-Y',strtotime($single['issue_date'])); ?></td>
+                        <td class="news_date"><?= date('d-m-Y', strtotime($single['issue_date'])); ?></td>
+                        <td class="type">
+                            <select name="type" class="type-change" data-id="<?= $single['id'] ?>">
+                                <option <?= $single['type'] == 0 ? 'selected' : '' ?> value="0">News</option>
+                                <option <?= $single['type'] == 1 ? 'selected' : '' ?> value="1">Clip</option>
+                            </select>
+                        </td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-primary update-news" data-del_img="<?= $single['image']?>" data-news_id="<?= $single['id'] ?>" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
+                            <button type="button" class="btn btn-sm btn-primary update-news" data-news_id="<?= $single['id'] ?>">Update</button>
+                            <?php
+
+                            if ($single['is_active'] == 0) {
+                                echo '<form action="" method="POST">
+                                <input type="hidden" name="id" value="' . $single['id'] . '">
+                                <input type="hidden" name="field" value="is_active">
+                                <input type="hidden" name="val" value="1">
+                                <input type="submit" value="Active" class="btn btn-sm btn-success">
+                            </form>';
+                            } else {
+                                echo '<form action="" method="POST">
+                                <input type="hidden" name="id" value="' . $single['id'] . '">
+                                <input type="hidden" name="field" value="is_active">
+                                <input type="hidden" name="val" value="0">
+                                <input type="submit" value="De Active" class="btn btn-sm btn-danger ">
+                            </form>';
+                            }
+                            ?>
                             <?= '<form method="POST">
                                 <input type="hidden" name="id" value="' . $single['id'] . '">
+                                <input type="hidden" name="delete_img" value="' . $single['image'] . '">
                                 <input type="submit" name="delete" value="Delete" class="btn btn-sm btn-danger">
                             </form>'; ?>
                         </td>
@@ -150,66 +183,59 @@ if (isset($_POST['delete'])) {
 <?php require_once 'layout/admin/footer.php'; ?>
 
 <script>
+    var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+        keyboard: false
+    })
+    // fetch news data 
     $('.update-news').click(function() {
-        let room_id = $(this).data('news_id');
-        let del_img = $(this).data('del_img');
-        let tr = $(this).closest('tr');
-        let news_title = tr.find('.news_title').html();
-        let news_desc = tr.find('.news_desc').html();
-        let news_date = tr.find('.news_date').html();
-        $('#room-num').val(room_title);
-        $('#room-pre').val(room_title);
-        $('#room-cap').val(room_capacity);
-        $('#room-id').val(room_id);
-        $('#room-images').html('')
+        let news_id = $(this).data('news_id');
         $.ajax({
-            url: 'ajax/room.php',
+            url: 'ajax/news.php',
             type: 'post',
             data: {
-                room_imgs: 1,
-                room_id: room_id
+                fetch_news: 1,
+                news_id: news_id
             },
             success: function(res) {
-                let imgs = JSON.parse(res);
-                let img_html = '';
-                imgs.forEach(element => {
-                    img_html += `
-                    <div class="row" id="delimg-${element.id}">
-                            <div class="col-md-8"><img class=" w-50" src="<?= uploads('${element.image}') ?>"/></div>
-                            <div class="col-md-4"><a href='javascript:;' class="btn btn-sm btn-danger" onclick='del_img(${element.id},"${element.image}")'>delete</a></div>
-                        </div>
-                    `;
-                });
-                $('#room-images').html(img_html);
+                if (res != 'null') {
+                    let news = JSON.parse(res);
+                    $('#news-id').val(news.id);
+                    $('#news-delimg').val(news.image);
+                    $('#news-img').attr('src', 'uploads/' + news.image);
+                    $('#news-title').val(news.title);
+                    $('#news-desc').val(news.description);
+                    $('#news-date').val(news.issue_date);
+                    $('#news-type').val(news.type);
+                    myModal.show()
+                } else {
+                    alert('Something wrong');
+                }
+
             }
         });
-    })
+    });
 
-    function del_img(img_id, image) {
+    $('.type-change').change(function() {
+        let type = $(this).val();
+        let news_id = $(this).data('id');
         $.ajax({
-            url: 'ajax/room.php',
+            url: 'ajax/news.php',
             type: 'post',
             data: {
-                img_delete: 1,
-                id: img_id,
-                image: image
+                action_news: 1,
+                news_id: news_id,
+                type: type
             },
             success: function(res) {
-                if (res) {
-                    $('#delimg-' + img_id).fadeOut();
-                    alert('Image deleted')
+                if (res == 2) {
+                    $(this).val(0);
+                    alert('clip news already exist');
+                } else if (res == 'true') {
+                    alert('news updated')
                 } else {
-                    alert('Server error')
+                    alert('server error')
                 }
             }
         })
-    }
-
-    $('.action-btn').click(function() {
-        let action = $(this).val();
-        let decision = confirm(`If you ${action} this room, then user are dealocated room.`);
-        if (decision) {
-            $(this).closest('form').submit();
-        }
-    })
+    });
 </script>
