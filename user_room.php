@@ -1,6 +1,8 @@
 <?php require_once 'layout/user/header.php'; ?>
 
 <?php
+check_login_user();
+
 $qry = "SELECT *,
             users.id as user_id ,
             departments.name as dept_name

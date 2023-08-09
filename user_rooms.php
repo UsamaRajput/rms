@@ -1,11 +1,12 @@
 <?php require_once 'layout/user/header.php'; ?>
 <?php
+check_login_user();
 $user = single_data($db, 'users', ' id = 2');
 $rooms = all_data($db, 'rooms');
 ?>
 
 <div style="margin-left: 300px;">
-    <div id="room-no">Requested Room: <span> <?= ($user['requested_room'] == 0 ? 'not requested' :  ROOM_PREFIX . $user['requested_room']) ?> </span></div>
+    <div id="room-no">Requested Room: <span> <?= ($user['requested_room'] == 0 ? 'Not requested' :  ROOM_PREFIX . $user['requested_room']) ?> </span></div>
     <div>
         <table border="1">
             <thead>
@@ -16,10 +17,12 @@ $rooms = all_data($db, 'rooms');
                     <th>Capacity</th>
                     <th>Current</th>
                     <?php
-                    if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+                    // if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
                     ?>
                         <th>Request to Approve</th>
-                    <?php } ?>
+                    <?php 
+                // }
+                 ?>
                 </tr>
             </thead>
             <tbody>
@@ -42,18 +45,21 @@ $rooms = all_data($db, 'rooms');
                         <td><?= $single['current'] ?></td>
                         <td>
                             <?php
-                            if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+                            // if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
 
-                                if (($single['current'] >= $single['capacity']) && $user['requested_room'] == 0) {
+                            if (($single['current'] >= $single['capacity']) && $user['requested_room'] <= 0 && $user['room_id'] == 0) {
                             ?>
-                                    <button type="button" class="btn btn-sm btn-danger full-room" disabled>Full</button>
-                                <?php } else if (($single['current'] <= $single['capacity']) && $user['requested_room'] == 0) { ?>
-                                    <button type="button" class="btn btn-sm btn-primary request-room" data-id="<?= $single['id'] ?>">Request</button>
-                                <?php } else {
-                                ?>
-                                    <button type="button" class="btn btn-sm btn-danger" disabled>Requested</button>
+                                <button class="btn btn-sm btn-danger full-room" disabled>Full</button>
+                            <?php } else if (($single['current'] <= $single['capacity']) && $user['requested_room'] <= 0 && $user['room_id'] == 0) { ?>
+                                <button class="btn btn-sm btn-primary request-room" data-id="<?= $single['number'] ?>">Request</button>
+                            <?php } else if ($user['requested_room'] > 0 && $user['room_id'] == 0) {
+                            ?>
+                                <button class="btn btn-sm btn-info full-room" disabled>Requested</button>
+                            <?php } else {
+                            ?>
+                                <button class="btn btn-sm btn-info full-room" disabled>Room alloted</button>
                             <?php
-                                }
+                                // }
                             } ?>
                         </td>
                     </tr>
@@ -78,7 +84,7 @@ $rooms = all_data($db, 'rooms');
             },
             success: function(res) {
                 if (res == 1) {
-                    $('.request-room', '.full-room').html('Requested').attr('disabled', true).addClass('btn-danger').removeClass('btn-primary', 'request-room');
+                    $('.request-room , .full-room').html('Requested').attr('disabled', true).removeClass('btn-primary btn-danger request-room').addClass('btn-info');
                     $('#room-no span').html(`<?= ROOM_PREFIX ?>${id}`)
                     alert('Room Requested');
                 } else {

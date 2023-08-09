@@ -1,5 +1,7 @@
 <?php require_once __DIR__.'../../../helpers/include.php';?>
-
+<?php 
+check_login_admin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 

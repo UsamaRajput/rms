@@ -18,4 +18,10 @@
     <a href="user_rooms.php">All room</a>
     <a href="user_mess.php">Mess Dishes</a>
     <a href="user_staff.php">Staff</a>
+   <?php if(isset($_SESSION['user_id'])){?>
+    <a href="logout.php">Logout</a>
+    <?php }else{?>
+        <a href="sign_up.php">Sign up</a>
+        <?php }?>
+
 </nav>

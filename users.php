@@ -174,13 +174,10 @@ if (isset($_POST['delete'])) {
                     <th>Image</th>
                     <th>Name</th>
                     <th>Department</th>
-                    <th>Email</th>
-                    <th>CNIC</th>
                     <th>Phone</th>
-                    <th>Gender</th>
                     <th>DOB</th>
-                    <th>Address</th>
                     <th>City</th>
+                    <th>Request</th>
                     <th>Assign/Change room</th>
                     <th>action</th>
                 </tr>
@@ -194,13 +191,16 @@ if (isset($_POST['delete'])) {
                         <td><img src="<?= uploads($single['image']) ?>" width="50"></td>
                         <td><?= $single['first_name'] . ' ' . $single['last_name'] ?></td>
                         <td><?= $single['name'] ?></td>
-                        <td><?= $single['email'] ?></td>
-                        <td><?= $single['cnic'] ?></td>
                         <td><?= $single['phone'] ?></td>
-                        <td><?= $single['gender'] ?></td>
                         <td><?= date('d-m-Y', strtotime($single['dob'])) ?></td>
-                        <td><?= $single['address'] ?></td>
                         <td><?= $single['city'] ?></td>
+                        <td>
+                            <p> <?= ($single['requested_room'] == 0 ? 'not requested' :  ROOM_PREFIX . $single['requested_room']) ?></p>
+                            <?php if ($single['requested_room'] > 0) { ?>
+                                <button class="btn btn-success btn-sm req-room" data-user_id="<?= $single['user_id'] ?>" data-req_id="<?= $single['requested_room'] ?>">Approved</button>
+                                <button class="btn btn-danger btn-sm rej-room" data-user_id="<?= $single['user_id'] ?>">Reject</button>
+                            <?php } ?>
+                        </td>
                         <td>
                             <select class="assign-room" data-pre_id="<?= $single['room_id'] ?>" data-is_active="<?= $single['user_active'] ?>" data-is_verified="<?= $single['is_verified'] ?>" data-user_id="<?= $single['user_id'] ?>">
                                 <option value="0">--Select a Room</option>
@@ -366,4 +366,75 @@ if (isset($_POST['delete'])) {
             }
         });
     })
+
+    $('.req-room').click(function() {
+        let req_id = $(this).data('req_id');
+        let user_id = $(this).data('user_id');
+        $.ajax({
+            url: 'ajax/user.php',
+            type: 'post',
+            data: {
+                user_id,
+                req_id,
+                approve: 1
+            },
+            success: function(req) {
+                if (req == 2) {
+                    let reject_check = confirm('room is already filled do you want to reject all room request on for this room');
+                    if (reject_check) {
+                        reject_all(req_id);
+                    }
+                } else if (req == 0) {
+                    alert('Server error');
+                } else {
+                    let room = JSON.parse(req);
+                    if (room.capacity <= room.current) {
+                        let reject_check = confirm('room is filled now do you want to reject all room request on for this room');
+                        if (reject_check) {
+                            reject_all(req_id);
+                        }
+                    }
+                }
+            }
+        })
+    });
+
+    $('.rej-room').click(function() {
+        let user_id = $(this).data('user_id');
+        $.ajax({
+            url: 'ajax/user.php',
+            type: 'post',
+            data: {
+                rejected: 1,
+                user_id
+            },
+            success: function(res) {
+                if (res == 1) {
+                    alert('rejected');
+                } else {
+                    alert('server error')
+                }
+
+            }
+        })
+    });
+
+    function reject_all(req_id) {
+        $.ajax({
+            url: 'ajax/user.php',
+            type: 'post',
+            data: {
+                all_rejected: 1,
+                req_id
+            },
+            success: function(res) {
+                if ($res == 1) {
+
+                    alert('Successfully rejected all users');
+                } else {
+                    alert('server error');
+                }
+            }
+        })
+    }
 </script>

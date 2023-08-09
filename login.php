@@ -1,8 +1,7 @@
 <?php require_once __DIR__ . '/helpers/include.php'; ?>
 
 <?php
-// check_login($db, false);
-
+login_redirect();
 $name = '';
 $email = '';
 
@@ -18,7 +17,11 @@ if (isset($_POST['sign_in'])) {
             } else {
                 if (password_verify($password, $row['password'])) {
                     set_user_session($row);
-                    js_redirect('dashboard.php');
+                    if ($row['is_admin'] == 1) {
+                        js_redirect('dashboard.php');
+                    } else {
+                        js_redirect('index.php');
+                    }
                 } else {
                     js_alert('Password Not Match In Our Credentials');
                 }

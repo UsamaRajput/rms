@@ -49,19 +49,35 @@ function uploads($name = null)
     return "";
     // return SITE_URL;
 }
-function check_login($db, $check = true)
+
+function  login_redirect()
 {
-    if ($check == true) {
-        if (!(isset($_SESSION['user_id']) && $_SESSION['name'] && $_SESSION['email'])) {
-            if (isset($_SESSION['user_id'])) {
-                update($db, 'users', ['is_logged_in' => 0], " id = {$_SESSION['user_id']} ");
-            }
-            js_redirect('login.php');
-        }
-    } elseif ($check == false) {
-        if ((isset($_SESSION['user_id']) && $_SESSION['name'] && $_SESSION['email'])) {
-            js_redirect('dashboard.php');
-        }
+    if (isset($_SESSION['user_id']) && isset($_SESSION['name']) && isset($_SESSION['email']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] != 1) {
+        js_redirect('index.php');
+    }
+
+    if (isset($_SESSION['user_id']) && isset($_SESSION['name']) && isset($_SESSION['email']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1) {
+        js_redirect('dashboard.php');
+    }
+}
+
+
+function check_login_user()
+{
+    if (!(isset($_SESSION['user_id']) && isset($_SESSION['name']) && isset($_SESSION['email'])
+    )) {
+        js_redirect('login.php');
+    }
+}
+
+function check_login_admin()
+{
+    if (!(isset($_SESSION['user_id']) &&
+        isset($_SESSION['name']) &&
+        isset($_SESSION['email']) &&
+        isset($_SESSION['is_admin']) &&
+        $_SESSION['is_admin'] == 1)) {
+        js_redirect('login.php');
     }
 }
 
@@ -111,7 +127,7 @@ function muliple_uploads($dest, $files)
 function file_upload($dest, $file = array(), $del = '')
 {
     if ($del != '') {
-        if (file_exists('uploads/'. $del)) {
+        if (file_exists('uploads/' . $del)) {
             unlink('uploads/' . $del);
         }
     }
@@ -127,8 +143,8 @@ function file_upload($dest, $file = array(), $del = '')
 
 function delete_file($des)
 {
-    if (file_exists( $des)) {
-        return  unlink( $des);
+    if (file_exists($des)) {
+        return  unlink($des);
     }
 }
 
