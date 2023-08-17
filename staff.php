@@ -31,9 +31,11 @@ $staff = all_data($db, 'staff');
                     <?php } ?>
                 </div>
                 <div class="col-md-2">
-                    <input type="button" data-id="<?= $single['id'] ?>" value="delete" class='btn btn-danger btn-sm'>
+                    <input type="button" data-id="<?= $single['id'] ?>" data-old="<?= $single['image']?>" value="delete" class='btn btn-danger btn-sm' onclick="delPerson(this)">
+                    <input type="button" data-id="<?= $single['id'] ?>" value="update" class='btn btn-primary btn-sm' onclick="updatePerson(this)">
                 </div>
             </div>
+
         <?php } ?>
     </div>
     <button id="rowAdder" type="button" class="btn btn-dark">
@@ -43,6 +45,27 @@ $staff = all_data($db, 'staff');
 </div>
 <?php require_once 'layout/admin/footer.php'; ?>
 <script type="text/javascript">
+    function delPerson(ele) {
+        let element = $(ele).closest('.row');
+        let id = $(ele).data('id');
+        let old = $(ele).data('old');
+        $.ajax({
+            url: "ajax/staff.php",
+            type: 'post',
+            data: {
+                del_staff: 1,
+                id,old
+            },
+            success: function(res) {
+                if (res == 1) {
+                    element.remove();
+                } else {
+                    alert('server error');
+                }
+            }
+        })
+    }
+
     function activeDeactive(ele) {
         let is_active = $(ele).data('active');
         let id = $(ele).data('id');
@@ -60,28 +83,60 @@ $staff = all_data($db, 'staff');
             success: function(res) {
                 if (res == 1) {
                     $(ele).data('active', is_active);
-                    alert('rem' + remClass)
-                    alert("add" + showClass)
-                    alert("show" + showText)
                     $(ele).val(showText)
                     $(ele).removeClass(remClass).addClass(showClass);
                     alert('updated')
                 } else {
                     alert('server error')
                 }
-                // alert(res);
             }
         })
+    }
+
+    function addPerson(element) {
+
+        let ele = $(element).closest('.row');
+        let name = ele.find('.name').val();
+        let img = ele.find('.image')[0].files;
+        let role = ele.find('.role').val();
+        let fd = new FormData();
+        fd.append('image', img[0]);
+        fd.append('name', name);
+        fd.append('role', role);
+        fd.append('add_staff', 1);
+
+        $.ajax({
+            url: 'ajax/staff.php',
+            type: "post",
+            contentType: false,
+            processData: false,
+            data: fd,
+            success: function(res) {
+                if(res == 0){
+                    alert('server error')
+                }else if(res == 1){
+                    window.location.href = window.location.href;
+                }else{
+                    let data = JSON.parse(res);
+                    alert(data.image)
+                    ele.find('img').attr('src',"uploads/"+data.image);
+                    $("#rowAdder").show();
+
+                }
+                console.log(res);
+            }
+        })
+
     }
 </script>
 <script type="text/javascript">
     $("#rowAdder").click(function() {
+        let ele = $(this);
         let lastRow = $('#newinput').find('.row').last();
         let pname = lastRow.find('.name').val()
         let prole = lastRow.find('.role').val()
-
-        if (pname.length > 0) {
-            if (prole.length > 0) {
+        if (pname == undefined || pname.length > 0) {
+            if (pname == undefined || prole.length > 0) {
                 newRowAdd =
                     `
                     <div class="row">
@@ -98,15 +153,17 @@ $staff = all_data($db, 'staff');
                                 <input type="text" class="role" >
                             </div>
                             <div class="col-md-2">
-                                <input type="button" class="btn btn-primary btn-sm"  data-active='1' value='active'  >
+                                <input type="button" class="btn btn-danger btn-sm" data-active="1" data-id="0" value="de active" onclick="activeDeactive(this)">
                             </div>
                             <div class="col-md-2">
-                                <input type="button" value="delete" class='btn btn-danger' >
+                                <input type="button" value="delete" class='btn btn-danger btn-sm' data-id='0' onclick="delPerson(this)">
+                                <input type="button" value="add" class='btn btn-primary btn-sm' data-id='0' onclick="addPerson(this)">
                             </div>
                         </div>
                     `;
 
                 $('#newinput').append(newRowAdd);
+                ele.hide();
             } else {
                 alert('please add role');
             }

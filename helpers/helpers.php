@@ -127,13 +127,13 @@ function muliple_uploads($dest, $files)
 function file_upload($dest, $file = array(), $del = '')
 {
     if ($del != '') {
-        if (file_exists('uploads/' . $del)) {
-            unlink('uploads/' . $del);
+        if (file_exists(__DIR__ . '/../uploads/' . $del)) {
+            unlink(__DIR__ . '/../uploads/' . $del);
         }
     }
     $img_name = $dest . '/' . time() . '_' . str_replace(' ', '_', $file['name']);
     $tmp_path = $file['tmp_name'];
-    $res = move_uploaded_file($tmp_path, 'uploads/' . $img_name);
+    $res = move_uploaded_file($tmp_path, __DIR__ . '/../uploads/' . $img_name);
     if ($res) {
         return $img_name;
     } else {
@@ -143,7 +143,8 @@ function file_upload($dest, $file = array(), $del = '')
 
 function delete_file($des)
 {
-    if (file_exists($des)) {
+
+    if (file_exists($des) && is_file($des)) {
         return  unlink($des);
     }
 }

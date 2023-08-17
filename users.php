@@ -30,8 +30,8 @@ if (isset($_POST['field'])) {
 
 if (isset($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
-    $check = single_data($db, 'users', " (cnic = '" . $_POST['cnic'] . "'  OR email = '" . $_POST['email'] . "')" . " AND id <> $user_id");
-    if (is_array($check) && count($check) > 0) {
+    $check = single_data($db, 'users', " (cnic = '" . $_POST['cnic'] . "'  OR email = '" . $_POST['email'] . "')" . " AND id != $user_id");
+    if (!empty($check) && count($check) > 0) {
         js_alert('CNIC or Email alreay exist');
     } else {
         $err = false;
