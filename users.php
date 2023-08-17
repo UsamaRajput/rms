@@ -4,12 +4,10 @@
 // $users = all_data($db, 'users');
 $rooms = all_data($db, 'rooms', ' is_active = 1');
 $departments = all_data($db, 'departments');
-// $qry = "SELECT *,users.id as user_id, users.is_active as user_active FROM users LEFT JOIN rooms ON users.room_id = rooms.id LEFT JOIN departments ON users.dept_id = departments.id ";
-$qry = "SELECT *,users.id as user_id, users.is_active as user_active ,
-( SELECT count(dept_id) FROM users as depus WHERE users.dept_id = depus.dept_id ) as dept_count
-FROM users LEFT JOIN rooms ON users.room_id = rooms.id LEFT JOIN departments ON users.dept_id = departments.id ";
-// echo $qry;
-// die;
+$qry = "SELECT 
+        users.*, users.id as user_id, users.is_active as user_active,
+        rooms.*,departments.* 
+        FROM users LEFT JOIN rooms ON users.room_id = rooms.id LEFT JOIN departments ON users.dept_id = departments.id ";
 if ((isset($_GET['token']) && $_GET['token'] != '') && isset($_GET['sort']) && $_GET['sort'] != '') {
     $qry .= " WHERE `users`.`" . $_GET['token'] . '` = ' . $_GET['sort'];
 }
@@ -183,9 +181,7 @@ if (isset($_POST['delete'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $index => $single) {
-                    // pr($single,1);
-                ?>
+                <?php foreach ($users as $index => $single) { ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
                         <td><img src="<?= uploads($single['image']) ?>" width="50"></td>
@@ -195,11 +191,31 @@ if (isset($_POST['delete'])) {
                         <td><?= date('d-m-Y', strtotime($single['dob'])) ?></td>
                         <td><?= $single['city'] ?></td>
                         <td>
-                            <p> <?= ($single['requested_room'] == 0 ? 'not requested' :  ROOM_PREFIX . $single['requested_room']) ?></p>
-                            <?php if ($single['requested_room'] > 0) { ?>
+                            <!-- <p> <?= ($single['requested_room'] == 0 ? 'not requested' :  ROOM_PREFIX . $single['requested_room']) ?></p> -->
+                            <p class="req-text">
+                                <?php
+                                if ($single['requested_room'] == 0) {
+                                    echo 'not requested';
+                                } else {
+                                    $room = 0;
+                                    // foreach ($rooms as $key => $room) {
+                                    //     $room = ($single['requested_room'] == $room['id']) ? $room['number'] : 0;
+                                    // }
+                                    $room = array_filter($rooms, function ($item) use ($single) {
+                                        return $item['id'] == $single['requested_room'];
+                                    });
+                                    if (!empty($room)) {
+                                        $matchingRoom = reset($room); // Get the first element from the filtered array
+                                        echo ROOM_PREFIX . $matchingRoom['number'];
+                                    }
+                                } ?>
+                            
+                            <?php if ($single['requested_room'] > 0) {
+                            ?>
                                 <button class="btn btn-success btn-sm req-room" data-user_id="<?= $single['user_id'] ?>" data-req_id="<?= $single['requested_room'] ?>">Approved</button>
                                 <button class="btn btn-danger btn-sm rej-room" data-user_id="<?= $single['user_id'] ?>">Reject</button>
                             <?php } ?>
+                            </p>
                         </td>
                         <td>
                             <select class="assign-room" data-pre_id="<?= $single['room_id'] ?>" data-is_active="<?= $single['user_active'] ?>" data-is_verified="<?= $single['is_verified'] ?>" data-user_id="<?= $single['user_id'] ?>">
@@ -299,6 +315,14 @@ if (isset($_POST['delete'])) {
                     let data = JSON.parse(res);
                     if (data.success == 1) {
                         if (room_id == 0) {
+                            if (pre_id != 0) {
+                                let pre_capacity = data.pre_room.capacity;
+                                let pre_current = data.pre_room.current;
+                                if (pre_capacity >= pre_current) {
+                                    $(`option[value=${pre_id}]`).attr('disabled', false)
+                                }
+                                $(`.pre_id${user_id}`).val(room_id);
+                            }
                             alert('Room removed')
                         } else {
                             if (room_id != 0) {
@@ -368,6 +392,7 @@ if (isset($_POST['delete'])) {
     })
 
     $('.req-room').click(function() {
+        let eleTr = $(this).closest('tr');
         let req_id = $(this).data('req_id');
         let user_id = $(this).data('user_id');
         $.ajax({
@@ -388,6 +413,8 @@ if (isset($_POST['delete'])) {
                     alert('Server error');
                 } else {
                     let room = JSON.parse(req);
+                    eleTr.find(`.req-text`).html('not requested')
+                    eleTr.find(`option[value=${req_id}]`).attr('selected', true)
                     if (room.capacity <= room.current) {
                         let reject_check = confirm('room is filled now do you want to reject all room request on for this room');
                         if (reject_check) {

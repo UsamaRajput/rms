@@ -53,7 +53,6 @@ $mess = all_data($db, 'mess');?>
         //         dish1_units: dish1_units,
         //         dish2_units: dish2_units
         //     });
-        alert('hi')
         $.ajax({
             url: 'ajax/room.php',
             type: 'post',

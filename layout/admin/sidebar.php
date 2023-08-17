@@ -17,8 +17,14 @@
             <a href="news.php">
                 <li><i class="fa fa-cutlery"></i>News</li>
             </a>
+            <a href="webcontent.php">
+                <li><i class="fa fa-fire"></i>Page Content</li>
+            </a>
             <a href="mess.php">
                 <li><i class="fa fa-fire"></i>Mess</li>
+            </a>
+            <a href="staff.php">
+                <li><i class="fa fa-fire"></i>Staff</li>
             </a>
             <a href="logout.php">
                 <li><i class="fa fa-sign-out"></i>Log out</li>

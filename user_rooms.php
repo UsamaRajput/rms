@@ -51,7 +51,7 @@ $rooms = all_data($db, 'rooms');
                             ?>
                                 <button class="btn btn-sm btn-danger full-room" disabled>Full</button>
                             <?php } else if (($single['current'] <= $single['capacity']) && $user['requested_room'] <= 0 && $user['room_id'] == 0) { ?>
-                                <button class="btn btn-sm btn-primary request-room" data-id="<?= $single['number'] ?>">Request</button>
+                                <button class="btn btn-sm btn-primary request-room" data-id="<?= $single['id'] ?>">Request</button>
                             <?php } else if ($user['requested_room'] > 0 && $user['room_id'] == 0) {
                             ?>
                                 <button class="btn btn-sm btn-info full-room" disabled>Requested</button>

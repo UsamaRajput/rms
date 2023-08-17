@@ -12,7 +12,8 @@ if (isset($_POST['user_data']) && $_POST['user_data'] == 1) {
 if (isset($_POST['approve']) && $_POST['approve'] == 1) {
     $room_check = single_data($db, 'rooms', ' id = ' . $_POST['req_id']);
     if ($room_check['capacity'] > $room_check['current']) {
-        $res = update($db, 'users', ['room_id' => $_POST['req_id'],'requested_room' => 0], ' id = ' . $_POST['user_id']);
+        update($db, 'rooms', ['current' => $room_check['current'] + 1], 'id = ' . $_POST['req_id']);
+        $res = update($db, 'users', ['room_id' => $_POST['req_id'], 'requested_room' => 0], ' id = ' . $_POST['user_id']);
         if ($res) {
             $room = single_data($db, 'rooms', ' id = ' . $_POST['req_id']);
             echo json_encode($room);

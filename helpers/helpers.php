@@ -170,9 +170,15 @@ function js_alert($data)
         </script>";
 }
 
-function js_redirect($loc)
+function js_redirect($loc = null)
 {
-    echo "<script>
+    if ($loc == null) {
+        echo "<script>
+            window.location.href = window.location.href;
+            </script>";
+    } else {
+        echo "<script>
             window.location.href = '" . site_url($loc) . "';
-        </script>";
+            </script>";
+    }
 }
