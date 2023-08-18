@@ -24,7 +24,7 @@ if(isset($_POST['del_staff'])){
     }
 }
 
-if(isset($_POST['add_staff']) && $_POST['add_staff']){
+if(isset($_POST['add_staff']) && $_POST['add_staff'] == 1){
     $arr = $_POST;
     if(isset($_FILES['image']['name']) && !empty($_FILES['image']['name']))
     {
@@ -36,6 +36,30 @@ if(isset($_POST['add_staff']) && $_POST['add_staff']){
     if($res){
         $last_id = mysqli_insert_id($db);
         $data = single_data($db,'staff','id = '.$last_id);
+        if($data){
+            echo json_encode($data);
+            die;
+        }
+        echo 1;
+        die;
+    }
+    echo 0;
+    die;
+}
+
+if(isset($_POST['update_staff']) && $_POST['update_staff'] == 1){
+    $arr = $_POST;
+    if(isset($_FILES['image']['name']) && !empty($_FILES['image']['name']))
+    {
+        $arr['image'] = file_upload('images/staff',$_FILES['image'],$arr['oldImg']);
+    }
+    $id = $arr['id'];
+    unset($arr['update_staff']);
+    unset($arr['id']);
+    unset($arr['oldImg']);
+    $res = update($db,'staff',$arr,'id = '.$id);
+    if($res){
+        $data = single_data($db,'staff','id = '.$id);
         if($data){
             echo json_encode($data);
             die;

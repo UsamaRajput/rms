@@ -18,6 +18,7 @@ $staff = all_data($db, 'staff');
                     <img src="<?= uploads($single['image']) ?>" class="img-fluid" alt="">
                 </div>
                 <div class="col-md-2">
+                    <input type="hidden" class="old-img" value="<?= $single['image'] ?>">
                     <input type="file" class="image">
                 </div>
                 <div class="col-md-2">
@@ -31,7 +32,7 @@ $staff = all_data($db, 'staff');
                     <?php } ?>
                 </div>
                 <div class="col-md-2">
-                    <input type="button" data-id="<?= $single['id'] ?>" data-old="<?= $single['image']?>" value="delete" class='btn btn-danger btn-sm' onclick="delPerson(this)">
+                    <input type="button" data-id="<?= $single['id'] ?>" data-old="<?= $single['image']?>" value="delete" class='btn btn-danger btn-sm del-btn' onclick="delPerson(this)">
                     <input type="button" data-id="<?= $single['id'] ?>" value="update" class='btn btn-primary btn-sm' onclick="updatePerson(this)">
                 </div>
             </div>
@@ -94,7 +95,7 @@ $staff = all_data($db, 'staff');
     }
 
     function addPerson(element) {
-
+        let thisEle = $(element);
         let ele = $(element).closest('.row');
         let name = ele.find('.name').val();
         let img = ele.find('.image')[0].files;
@@ -118,15 +119,55 @@ $staff = all_data($db, 'staff');
                     window.location.href = window.location.href;
                 }else{
                     let data = JSON.parse(res);
-                    alert(data.image)
                     ele.find('img').attr('src',"uploads/"+data.image);
+                    ele.find('.old-img').val(data.image);
+                    
+                    ele.find('.del-btn').data('old',data.image).data('id',data.id);
+                    thisEle.data('id',data.id).val('update').attr('onclick',"updatePerson(this)");
+                    alert('added')
                     $("#rowAdder").show();
-
                 }
-                console.log(res);
             }
         })
+    }
 
+    function updatePerson(element){
+        let thisEle = $(element);
+        let id = thisEle.data('id');
+        let ele = $(element).closest('.row');
+        let name = ele.find('.name').val();
+        let oldImg = ele.find('.old-img').val();
+        let img = ele.find('.image')[0].files;
+        let role = ele.find('.role').val();
+        let fd = new FormData();
+        fd.append('image', img[0]);
+        fd.append('name', name);
+        fd.append('role', role);
+        fd.append('id', id);
+        fd.append('oldImg', oldImg);
+        fd.append('update_staff', 1);
+
+        $.ajax({
+            url: 'ajax/staff.php',
+            type: "post",
+            contentType: false,
+            processData: false,
+            data: fd,
+            success: function(res) {
+                if(res == 0){
+                    alert('server error')
+                }else if(res == 1){
+                    window.location.href = window.location.href;
+                }else{
+                    let data = JSON.parse(res);
+                    ele.find('img').attr('src',"uploads/"+data.image);
+                    ele.find('.old-img').val(data.image);
+                    
+                    ele.find('.del-btn').data('old',data.image);
+                    alert('updated');
+                }
+            }
+        })
     }
 </script>
 <script type="text/javascript">
@@ -156,7 +197,7 @@ $staff = all_data($db, 'staff');
                                 <input type="button" class="btn btn-danger btn-sm" data-active="1" data-id="0" value="de active" onclick="activeDeactive(this)">
                             </div>
                             <div class="col-md-2">
-                                <input type="button" value="delete" class='btn btn-danger btn-sm' data-id='0' onclick="delPerson(this)">
+                                <input type="button" value="delete" class='btn btn-danger btn-sm del-btn' data-id='0' onclick="delPerson(this)">
                                 <input type="button" value="add" class='btn btn-primary btn-sm' data-id='0' onclick="addPerson(this)">
                             </div>
                         </div>
