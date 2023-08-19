@@ -2,7 +2,6 @@
 
 <?php $content = single_data($db,'webcontent')?>
 
-
 <div class="row">
     <div class="col-md-12">
         <img src="<?= uploads($content['main_image'])?>" class="w-100" />
