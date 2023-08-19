@@ -21,7 +21,7 @@
    <?php if(isset($_SESSION['user_id'])){?>
     <a href="logout.php">Logout</a>
     <?php }else{?>
-        <a href="sign_up.php">Sign up</a>
+        <a href="login.php">Login</a>
         <?php }?>
 
 </nav>

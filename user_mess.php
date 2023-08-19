@@ -1,6 +1,5 @@
 <?php require_once 'layout/user/header.php'; ?>
 <?php
-check_login_user();
 
 $mess = all_data($db, 'mess');?>
 
