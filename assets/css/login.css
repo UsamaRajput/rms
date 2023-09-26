@@ -12,78 +12,29 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
 }
-
-.navbar {
-    width: 97%;
-    height: 20%;
-    margin: auto;
-    padding: 35px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-}
-
-.navbar ul li {
-    font-size: 15px;
-    list-style: none;
-    display: inline-block;
-    margin: 20px;
-    position: relative;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    color: #2691d9;
-    text-transform: uppercase;
-}
-
-.navbar ul li ::after {
-    content: '';
-    height: 3px;
-    width: 0%;
-    background-color: #feaa24;
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-}
-
-.navbar ul li :hover:after {
-    width: 100%;
-    transition: 0.5s;
-}
-
 .center {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -40%);
-    background-image: url("adrien-converse-FWhTeWRCeis-unsplash.jpg");
+background-color: #000000;
     background-size: 100% 100%;
     width: 350px;
     border-radius: 20px;
     box-shadow: 0 2px 4px 0 rgb(89, 89, 89),
         0 4px 16px 0 rgb(128, 128, 128);
 }
-
 .center h1 {
     text-align: center;
     padding: 0 0 20px 0;
-    border: bottom 1px solid #adadad;
+    border: bottom 1px solid #ffffff;
     font-size: 20px;
     color: #ffffff;
 }
-
 .center form {
     padding: 0 40px;
     box-sizing: border-box;
 }
-
 .form .txt_field {
     position: relative;
     border-bottom: 2px solid #adadad;

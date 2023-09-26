@@ -47,11 +47,7 @@ if (isset($_POST['sign_in'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <title>Mess Management System</title>
     <link rel="Stylesheet" href="<?= assets('login.css', 1) ?>">
-    <style>
-        form {
-            background-color: black;
-        }
-    </style>
+
 </head>
 
 <body>
