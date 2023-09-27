@@ -111,16 +111,16 @@ transform: translate(-28%, 250%);
 }*/
 .ba {
     color: #ffffff;
-    font-size: 50px;
+    font-size: 20px;
     text-align: center;
-    line-height: 60px;
+    line-height: 30px;
     border-radius: 60px;
 }
 
 .menu-bar {
     background-color: #000000;
-    text-align: center;
-    width: 12%;
+    text-align:left;
+    width: 13%;
     float: left;
     position: fixed;
     height: 100vh;
@@ -150,14 +150,6 @@ transform: translate(-28%, 250%);
     cursor: pointer;
 }
 
-.menu-bar ul li .logo:hover {
-    cursor: pointer;
-
-}
-
-.bi {
-    color: #000000;
-}
 
 .menu-bar ul li a {
     text-decoration: none;
@@ -166,111 +158,21 @@ transform: translate(-28%, 250%);
 
 .menu-bar a {
     text-decoration: none;
+
     color: #fff;
 }
 
 .active,
 .menu-bar ul li:hover {
     background: #397487;
-    border-radius: 3px;
-    height: 40px;
+    border-radius: 7px;
+    height: 60px;
     width: 120px;
     line-height: 28px;
 }
 
 .menu-bar .fa {
     margin-right: 8px;
-}
-
-.sub-menu-1 {
-    display: none;
-}
-
-.menu-bar ul li:hover .sub-menu-1 {
-    display: block;
-    position: absolute;
-    background-color: #000000;
-    margin-top: -38px;
-    margin-left: 115px;
-}
-
-.menu-bar ul li:hover .sub-menu-1 ul {
-    display: block;
-    margin: 10px;
-}
-
-.menu-bar ul li:hover .sub-menu-1 ul li {
-    width: 120px;
-    padding: 10px;
-    color: #ffffff;
-    background: transparent;
-    cursor: pointer;
-}
-
-.menu-bar ul li:hover .sub-menu-1 ul li:hover {
-    color: #feaa24;
-}
-
-.sub-menu-2 {
-    display: none;
-}
-
-.menu-bar .sub-menu-1 ul li:hover .sub-menu-2 {
-    display: block;
-    position: absolute;
-    background-color: #000000;
-    margin-top: -30px;
-    margin-left: 100px;
-}
-
-.menu-bar ul li:hover .sub-menu-2 ul {
-    display: block;
-    margin: 10px;
-}
-
-.menu-bar ul li:hover .sub-menu-2 ul li {
-    width: 120px;
-    padding: 10px;
-    color: #ffffff;
-    background: transparent;
-    cursor: pointer;
-}
-
-.menu-bar ul li:hover .sub-menu-2 ul li:hover {
-    color: #feaa24;
-}
-
-.sub-menu-3 {
-    display: none;
-}
-
-.menu-bar .sub-menu-1 ul li:hover .sub-menu-3 {
-    display: block;
-    position: absolute;
-    background-color: #000000;
-    margin-top: 0px;
-    margin-left: 120px;
-}
-
-.menu-bar ul li:hover .sub-menu-3 ul {
-    display: block;
-    margin: 20px;
-}
-
-.menu-bar ul li:hover .sub-menu-3 ul li {
-    width: 150px;
-    padding: 10px;
-    color: #ffffff;
-    background: transparent;
-    cursor: pointer;
-}
-
-.menu-bar ul li:hover .sub-menu-3 ul li:hover {
-    color: #feaa24;
-}
-
-.menu-bar ul li:hover .sub-menu-3 ul li a:hover {
-    color: #feaa24;
 }
 
 @media screen and (max-width: 750px) {
@@ -307,7 +209,7 @@ transform: translate(-28%, 250%);
     .menu-bar ul li:hover {
         background: #397487;
         border-radius: 3px;
-        height: 35px;
+        height: 45px;
         line-height: 20px;
         width: 120px;
     }

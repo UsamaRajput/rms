@@ -24,7 +24,7 @@
                 <li><i class="fa fa-cutlery"></i>Mess</li>
             </a>
             <a href="staff.php">
-                <li><i class="fa fa-person"></i>Staff</li>
+                <li><i class="fa fa-users"></i>Staff</li>
             </a>
             <a href="logout.php">
                 <li><i class="fa fa-sign-out"></i>Log out</li>

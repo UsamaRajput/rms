@@ -28,7 +28,7 @@ $room_count = all_data($db,'rooms','',true);
         </button>
         <br> <br><br>
         <Button class="button1">
-            <div class="ba"> <i class="fa fa-desktop" aria-hidden="true"></i> </div> TOTAL ROOMS 
+            <div class="ba"> <i class="fa fa-bed" aria-hidden="true"></i> </div> TOTAL ROOMS 
             <span><?= $room_count?></span>
             <br>
         </Button>
