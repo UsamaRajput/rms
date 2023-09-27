@@ -45,12 +45,14 @@ if (isset($_POST['sign_in'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
-    <title>Mess Management System</title>
+    <title>Hostel Management System</title>
     <link rel="Stylesheet" href="<?= assets('login.css', 1) ?>">
 
 </head>
 
 <body>
+<img src="<?= assets('favicon.png',2)?>" alt="" class="logo" height="120" width="120">
+    <H3 class=main>Hostel Management System</h3>
     <div class="center"><br>
         <center>
             <i class="fa-solid fa-user"></i>
@@ -58,11 +60,11 @@ if (isset($_POST['sign_in'])) {
         </center>
         <form method="post">
             <div class="txt_field">
-                <input type="text" id="email" name="email" required>
+                <input type="text" placeholder="* Enter Email Address" id="email" name="email" required>
                 <label for="email">Email</label>
             </div>
-            <div class="txt_field">
-                <input type="password" id="password" name="password" required>
+            <div class="txt_field" >
+                <input type="password" placeholder="* Enter Password" id="password" name="password" required >
                 <label for="password">Password</label>
                 <br>
             </div>

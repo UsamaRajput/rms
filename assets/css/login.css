@@ -12,6 +12,17 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
 }
+.main{
+    position: absolute;
+    top: 8%;
+    left: 10%;
+    color: #feaa24;
+}
+.logo{
+    position: absolute;
+    top: 5%;
+    left: 2%;
+}
 .center {
     position: absolute;
     top: 50%;
@@ -62,7 +73,9 @@ background-color: #000000;
     font-size: 16px;
     pointer-events: none;
 }
-
+.txt_field ::placeholder{
+    opacity: 0.4;
+}
 .txt_field span ::before {
     content: '';
     position: absolute;
