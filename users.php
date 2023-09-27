@@ -58,7 +58,14 @@ if (isset($_POST['delete'])) {
     js_redirect('users.php');
 }
 ?>
-
+<head>
+    <link rel="icon" href="<?= assets('favicon.png', 2) ?>">
+    <script src="https://kit.fontawesome.com/b3cac23527.js" crossorigin="anonymous"></script>
+    <meta name="viewport content=width-device-width, initial-scale-1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+</head>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

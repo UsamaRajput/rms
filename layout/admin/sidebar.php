@@ -18,7 +18,7 @@
                 <li><i class="fa fa-newspaper"></i>News</li>
             </a>
             <a href="webcontent.php">
-                <li><i class="fa fa-fire"></i>Page Content</li>
+                <li><i class="fa fa-paperclip"></i>Page Content</li>
             </a>
             <a href="mess.php">
                 <li><i class="fa fa-cutlery"></i>Mess</li>
