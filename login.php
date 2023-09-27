@@ -39,7 +39,7 @@ if (isset($_POST['sign_in'])) {
 <html lang="en">
 
 <head>
-    <link rel="icon" href="<?= assets('logo.jpg', 2) ?>">
+    <link rel="icon" href="<?= assets('favicon.png', 2) ?>">
     <script src="https://kit.fontawesome.com/b3cac23527.js" crossorigin="anonymous"></script>
     <meta name="viewport content=width-device-width, initial-scale-1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
