@@ -51,8 +51,7 @@ if (isset($_POST['sign_in'])) {
 </head>
 
 <body>
-<img src="<?= assets('favicon.png',2)?>" alt="" class="logo" height="120" width="120">
-    <H3 class=main>Hostel Management System</h3>
+<img src="<?= assets('logs.png',2)?>" alt="" class="logo" height="160" width="220">
     <div class="center"><br>
         <center>
             <i class="fa-solid fa-user"></i>
