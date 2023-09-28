@@ -63,7 +63,6 @@ if (isset($_POST['sign_up'])) {
         <br>
         Address <br>
         <input type="text" name="address" value="<?= $_POST['address'] ?? '' ?>" placeholder="Address" class="phone1">
-        Address <br>
         <input type="text" name="city" value="<?= $_POST['city'] ?? '' ?>" placeholder="City" class="phone1">
         <br>
         Blood Group
@@ -103,6 +102,7 @@ if (isset($_POST['sign_up'])) {
         <br> <input type="submit" value="Signup" name="sign_up">
         <br><br>
     </form>
+    Already have account <a href="login.php" div class="login">Login</a>
     </div>
 
     <br><br>
