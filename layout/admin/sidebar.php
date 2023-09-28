@@ -1,6 +1,6 @@
 <div class="menu-bar">
         <ul>
-            <img src="<?= assets('favicon.png',2)?>" alt="" class="logo" height="120" width="120">
+            <img src="<?= assets('favicon.png',2)?>" alt="" class="logo" height="100" width="100">
           
             <a href="dashboard.php">
                 <li><i class="fa fa-home"></i>Home</li>
