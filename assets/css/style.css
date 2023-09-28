@@ -131,6 +131,8 @@ transform: translate(-28%, 250%);
 
 .menu-bar ul {
     display: table-column;
+    padding: 10px 0;
+    font-size: 12px;
     list-style: none;
     color: #fff;
 }
@@ -166,8 +168,9 @@ transform: translate(-28%, 250%);
 .menu-bar ul li:hover {
     background: #397487;
     border-radius: 7px;
-    height: 60px;
+    height: 35px;
     width: 120px;
+    padding: 10px 0;
     line-height: 28px;
 }
 
