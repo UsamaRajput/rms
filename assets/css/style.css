@@ -141,16 +141,12 @@ transform: translate(-28%, 250%);
     width: 120px;
     line-height: 25px;
     margin: 20px;
-    padding: 6.05px;
+    padding: 3.05px;
 }
 
-.menu-bar ul li .logo {
-    width: 100px;
-    height: 100px;
-    margin: 20px;
-    position: absolute;
-    float: left;
-    cursor: pointer;
+.logo {
+  margin-left: 30px;
+  margin-bottom: 10px;
 }
 
 
@@ -167,11 +163,10 @@ transform: translate(-28%, 250%);
 
 .active,
 .menu-bar ul li:hover {
-    background: #616161;
+    background: #005187;
     border-radius: 7px;
     height: 35px;
     width: 150px;
-    padding: px 0;
    
 }
 
