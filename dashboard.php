@@ -8,7 +8,7 @@ $room_count = all_data($db,'rooms','',true);
 
     <div class="Box">
         <button class="button2">
-            <div class="ba"> <i class="fa fa-bar-chart" aria-hidden="true"></i> </div> DASHBOARD
+            <div class="ba"> <i class="fa fa-bar-chart" aria-hidden="true"></i> </div> DASHBOARD 
         </button>
         <button class="button">
             <div class="ba">
