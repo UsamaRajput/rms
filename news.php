@@ -31,7 +31,7 @@ if (isset($_POST['update_news'])) {
     $exists = all_data($db, 'news', " type = 1 AND id <> " . $_POST['news_id'], true);
 
     if ($exists > 0) {
-        js_alert('Notis can only be one please remove first notis');
+        js_alert('Notis can only be one please remove first notis!');
     } else {
         $id = $_POST['news_id'];
         $del_img = $_POST['del_img'];
